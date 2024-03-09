@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem de Pontos Veterinário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Contagem de Pontos Veterinário</h1>
+    </header>
+
+    <section class="ranking">
+        <h2>Ranking de Pontos:</h2>
+        <ol>
+            {% for user in users %}
+                <li>{{ user['name'] }} - {{ user['points'] }} pontos</li>
+            {% endfor %}
+        </ol>
+    </section>
+
+    <section class="upload">
+        <h2>Envie um Arquivo:</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <select name="user_id" required>
+                {% for user in users %}
+                    <option value="{{ loop.index0 }}">{{ user['name'] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Enviar Arquivo (+3 pontos)</button>
+        </form>
+    </section>
+
+    <section class="register">
+        <h2>Cadastrar Novo Usuário:</h2>
+        <form action="/register" method="post">
+            <input type="text" name="username" placeholder="Nome de Usuário" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </section>
+</body>
+</html>
